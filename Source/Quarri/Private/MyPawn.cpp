@@ -47,18 +47,21 @@ void AMyPawn::Tick( float DeltaTime )
 void AMyPawn::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
 	Super::SetupPlayerInputComponent(InputComponent);
-	InputComponent->BindAxis("MoveX", this, &AMyPawn::MoveXAxis);
-	InputComponent->BindAxis("MoveY", this, &AMyPawn::MoveYAxis);
+	InputComponent->BindAction("Left", IE_Pressed, this, &AMyPawn::TurnLeft);
+	InputComponent->BindAction("Right", IE_Pressed, this, &AMyPawn::TurnRight);
+	InputComponent->BindAction("Forward", IE_Pressed, this, &AMyPawn::MoveForward);
 }
 
-void AMyPawn::MoveXAxis(float AxisValue)
+void AMyPawn::TurnLeft()
 {
-	Move(FVector::ForwardVector, AxisValue);
+	int res = ((((dir - 1) % 4) + 4) % 4); // modulo a second time to account for negatives
+	dir = DIRECTIONS(res);
+	//UE_LOG(LogTemp, Warning, TEXT("%i"), res);
 }
 
-void AMyPawn::MoveYAxis(float AxisValue)
+void AMyPawn::TurnRight()
 {
-	Move(FVector::RightVector, AxisValue);
+	dir = DIRECTIONS((dir + 1) % 4);
 }
 
 bool AMyPawn::IsMoving()
@@ -66,10 +69,21 @@ bool AMyPawn::IsMoving()
 	return FVector::Dist(GetActorLocation(), DesiredLocation) > 3.0f;
 }
 
-void AMyPawn::Move(FVector Direction, float AxisValue)
+void AMyPawn::MoveForward()
 {
 	if (!IsMoving()) {
-		float ClampedAxisValue = FMath::Clamp(AxisValue, -1.0f, 1.0f);
-		DesiredLocation = GetActorLocation() + Direction * ClampedAxisValue * MOVE_DISTANCE;
+		DesiredLocation = GetActorLocation() + DirToVector() * MOVE_DISTANCE;
 	}
+}
+
+FVector AMyPawn::DirToVector()
+{
+	switch (dir){
+	case DIRECTIONS::UP: return FVector::ForwardVector; break;
+	case DIRECTIONS::RIGHT: return FVector::RightVector; break;
+	case DIRECTIONS::DOWN: return FVector::ForwardVector * -1; break;
+	case DIRECTIONS::LEFT: return FVector::RightVector * -1; break;
+	default: return FVector::ZeroVector; break;
+	}
+
 }

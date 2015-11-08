@@ -29,12 +29,18 @@ class QUARRI_API AMyPawn : public APawn
 	UCameraComponent* OurCamera;
 
 	//Input functions
-	void MoveXAxis(float AxisValue);
-	void MoveYAxis(float AxisValue);
+	void TurnLeft();
+	void TurnRight();
+	void MoveForward();
+
+	// gets a vector from the direction we're currently facing
+	FVector DirToVector();
 
 private:
 	const float MOVE_SPEED = 5;
 	const float MOVE_DISTANCE = 100;
+	enum DIRECTIONS { UP, RIGHT, DOWN, LEFT};
+	DIRECTIONS dir = UP;
 
 	FVector DesiredLocation;
 	bool IsMoving();
