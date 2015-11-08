@@ -41,8 +41,15 @@ private:
 	const float MOVE_DISTANCE = 100;
 	enum DIRECTIONS { UP, RIGHT, DOWN, LEFT};
 	DIRECTIONS dir = UP;
-
 	FVector DesiredLocation;
+	FRotator DesiredRotation; // use yaw
+	FRotator GetCurrentRotation(); // rotation of OurVisibleComponent
+
+	/** NOT IN USE
 	bool IsMoving();
+	bool IsTurning();
+	bool IsMovingOrTurning();
+	**/
+
 	void Move(FVector Direction, float AxisValue);
 };
