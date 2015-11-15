@@ -1,21 +1,29 @@
 # Quarri
-A 3D remake of the math class classic BlockDude, where you play an adorable forklift named Quarri who needs to solve puzzles consisting of moving and maneuver around blocks in order to bust out of block hell and find her real home
+A remake of the math class classic BlockDude, where you play an adorable forklift named Quarri who needs to solve puzzles consisting of moving and maneuver around blocks in order to bust out of block hell and find her real home
 
-Objective:
+## Installing and running
+WARNING: make sure the path you clone to doesn't have spaces or the Makefile wont work
+1. git clone https://github.ccs.neu.edu/QuadPrism/Quarri.git
+2. cd Quarri
+3. make install
+4. make
+5. ./main
+
+## Objective
 Get to the exit
 
-Controls:
+## Controls
 Up arrow moves forward. Left and right arrows turn Quarri 90 degrees in that direction.(see movement)
-Spacebar or down arrow to pick up/put down a block (see pick things up and put things down)
+Space bar or down arrow to pick up/put down a block (see pick things up and put things down)
 
-Movement:
-Quarri moves one space on the grid at a time. 
+## Movement
+Quarri moves one space on the grid at a time.
 Player must tap the key more than one time in order to move more than once.
 Quarri will automatically move up on top of a block if there is a block in her way
 but, if the obstacle is two or more blocks high, Quarri cannot move in that direction
 Quarri can fall down any number of blocks, no matter how deep the pit. No fall damage.
 
-Pick things up and put things down:
+## Pick things up and put things down
 If Quarri is not holding a block, Quarri picks up the block directly in front of her, if there is one.
 If Quarri is holding a block, she puts it down in the space directly in front of her, if there is space.
 Quarri carries the block on top of her head. This makes it so she can't get through shallow rooms.
