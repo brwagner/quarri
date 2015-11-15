@@ -1,6 +1,6 @@
 #include "Vector.hpp"
 #include <cassert>
-
+// see Vector.hpp for documentation
 Vector::Vector() : m_x(0), m_y(0) {}
 
 Vector::Vector(double d1, double d2) : m_x(d1), m_y(d2) {}
