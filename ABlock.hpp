@@ -1,17 +1,14 @@
-#ifndef Player_hpp
-#define Player_hpp
+#ifndef ABlock_hpp
+#define ABlock_hpp
 
 #include "AGameObject.hpp"
-#include "ABlock.hpp"
-#include "SDL.h"
 
-class Player : public AGameObject {
+class ABlock : AGameObject {
 public:
+    virtual void isMovable() = 0;
     virtual void update();
     virtual void handleEvent(SDL_Event event);
     virtual void draw(SDL_Renderer* renderer);
-private:
-    ABlock * m_held_block;
 };
 
 #endif
