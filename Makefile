@@ -46,7 +46,7 @@ install:
 		./configure --prefix=$(SDL_BUILD_PATH); \
 		make all; \
 		make install; \
-		export SDL_CONFIG=`$(SDL_BUILD_PATH)/bin/sdl2-config`; \
+		export SDL_CONFIG=$(SDL_BUILD_PATH)/bin/sdl2-config; \
 		if [ -d $(SDL_GFX_BUILD_PATH) ]; \
 			then echo SDL GFX Install complete. Please remove folder $(SDL_GFX_BUILD_PATH) if you want to reinstall; \
 		else \
