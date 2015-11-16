@@ -16,12 +16,12 @@ void Display::render(const std::vector<AGameObject*> & level) {
     SDL_SetRenderDrawColor(m_renderer, 255, 204, 0, 255);
     SDL_RenderClear(m_renderer);
     
-    // Draw the gameobjects
+    // Draw the gameobjects to the renderer
     for (std::vector<AGameObject*>::const_iterator it = level.begin(); it != level.end(); ++it) {
         (*it)->draw(m_renderer);
     }
     
-    // Present
+    // render the renderer to the window
     SDL_RenderPresent(m_renderer);
 }
 
