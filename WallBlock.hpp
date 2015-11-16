@@ -3,12 +3,10 @@
 
 #include "ABlock.hpp"
 
-
-class WallBlock : ABlock {
+class WallBlock : public ABlock {
 public:
-    virtual void isMovable();
-    
+    virtual bool isMovable();
+    virtual int getColor();
 };
-
     
 #endif

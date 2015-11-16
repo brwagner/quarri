@@ -14,6 +14,8 @@ public:
 
     static unsigned int PLAYER_COLOR;
     static unsigned int WALL_COLOR;
+    
+    static int LEVEL_SIZE;
 };
 
 #endif

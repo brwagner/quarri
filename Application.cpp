@@ -2,6 +2,7 @@
 
 #include "Display.hpp"
 #include "Player.hpp"
+#include "WallBlock.hpp"
 
 void Application::start() {
     const char * name = "Quarri";
@@ -11,6 +12,7 @@ void Application::start() {
     
     std::vector<AGameObject*> level;
     level.push_back(new Player());
+    level.push_back(new WallBlock());
         
     SDL_Event event;
     bool running = true;

@@ -3,9 +3,10 @@
 
 #include "AGameObject.hpp"
 
-class ABlock : AGameObject {
+class ABlock : public AGameObject {
 public:
-    virtual void isMovable() = 0;
+    virtual bool isMovable() = 0;
+    virtual int getColor() = 0;
     virtual void update();
     virtual void handleEvent(SDL_Event event);
     virtual void draw(SDL_Renderer* renderer);
