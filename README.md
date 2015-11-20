@@ -2,7 +2,8 @@
 A remake of the math class classic BlockDude, where you play an adorable forklift named Quarri who needs to solve puzzles consisting of moving and maneuver around blocks in order to bust out of block hell and find her real home
 
 ## Installing and running
-WARNING: make sure the path you clone to doesn't have spaces in any directory name or the Makefile wont work
+#####WARNING: make sure the path you clone to doesn't have spaces in any directory name or the Makefile won't work
+
 1. git clone https://github.ccs.neu.edu/QuadPrism/Quarri.git
 2. cd Quarri
 3. make install
