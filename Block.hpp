@@ -1,15 +1,16 @@
-#ifndef ABlock_hpp
-#define ABlock_hpp
+#ifndef Block_hpp
+#define Block_hpp
 
 #include "AGameObject.hpp"
 
-class ABlock : public AGameObject {
+class Block : public AGameObject {
 public:
-    virtual bool isMovable() = 0;
-    virtual int getColor() = 0;
+    Block(std::pair<double, double> pos, bool movable, int color);
     virtual void update();
     virtual void handleEvent(SDL_Event event);
     virtual void draw(SDL_Renderer* renderer);
+private:
+    int m_color;
 };
 
 #endif

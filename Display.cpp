@@ -11,13 +11,13 @@ Display::Display(const char * name, int width, int height) : m_width(width), m_h
     m_renderer = SDL_CreateRenderer(m_window, 0, SDL_RENDERER_ACCELERATED);
 }
 
-void Display::render(const std::vector<AGameObject*> & level) {
+void Display::render(std::vector<AGameObject*> * level) {
     // Draw the background
     SDL_SetRenderDrawColor(m_renderer, 255, 204, 0, 255);
     SDL_RenderClear(m_renderer);
     
     // Draw the gameobjects to the renderer
-    for (std::vector<AGameObject*>::const_iterator it = level.begin(); it != level.end(); ++it) {
+    for (std::vector<AGameObject*>::const_iterator it = level->begin(); it != level->end(); ++it) {
         (*it)->draw(m_renderer);
     }
     
