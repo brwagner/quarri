@@ -8,7 +8,8 @@
 build
 
 # Extracted libs
-lib/*/
+lib/SDL2-2.0.3
+lib/SDL2_gfx-1.0.1
 
 # Main executable
 main
