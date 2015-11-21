@@ -6,6 +6,7 @@
 #include <sstream>
 
 typedef std::map<std::pair<double, double>, AGameObject*> level_map_t;
+typedef std::pair<std::pair<double,double>, AGameObject*> level_map_kvp_t;
 
 LevelState::LevelState(const std::string level_res_path) : m_level_res_path(level_res_path) {}
 
@@ -39,45 +40,36 @@ void LevelState::update() {
 }
 
 void LevelState::renderTo(Display* display) {
-    std::vector<AGameObject*> values;
-    for(level_map_t::iterator it = m_level_map.begin(); it != m_level_map.end(); ++it) {
-        values.push_back(it->second);
-    }
+    std::vector<AGameObject*> values = getValueList();
     display->render(&values);
 }
 
 void LevelState::handleEvent(SDL_Event event) {
-    std::vector<AGameObject*> values;
-    for(level_map_t::iterator it = m_level_map.begin(); it != m_level_map.end(); ++it) {
-        values.push_back(it->second);
-    }
-    for (std::vector<AGameObject*>::const_iterator it = values.begin(); it != values.end(); ++it) {
-        (*it)->handleEvent(event);
-    }
-}
-
-void LevelState::clear() {
-    std::vector<AGameObject*> values;
-    for(level_map_t::iterator it = m_level_map.begin(); it != m_level_map.end(); ++it) {
-        values.push_back(it->second);
-    }
-    for (std::vector<AGameObject*>::iterator it = values.begin(); it != values.end(); ++it) {
-        m_level_map.erase(m_level_map.find((*it)->getPos()));
+    std::vector<level_map_kvp_t> kvps = getKeyValueList();
+    for (std::vector<level_map_kvp_t>::const_iterator it = kvps.begin(); it != kvps.end(); ++it) {
+        it->second->handleEvent(event);
     }
 }
 
 void LevelState::loadLevel(int level_index) {
-    clear();
+    // clear the map of existing gameobjects
+    m_level_map.clear();
+    // get the path of the level to load
     std::string level_to_load = m_level_res_path;
     std::stringstream out;
     out << level_index;
     level_to_load += out.str() + ".quar";
+    // create the file stream
     std::ifstream level_in(level_to_load);
+    
+    // read lines into a vector
     std::string line;
     std::vector<std::string> lines;
     while (std::getline(level_in, line)) {
         lines.push_back(line);
     }
+    
+    // build up the level by iterating in reverse order through the rows and forward order through the columns
     double y = 0;
     double x = 0;
     for(std::vector<std::string>::reverse_iterator rit = lines.rbegin(); rit != lines.rend(); ++rit, x = 0, y += Constants::PLAYER_SIZE)
@@ -100,4 +92,20 @@ void LevelState::loadLevel(int level_index) {
             }
         }
     }
+}
+
+std::vector<level_map_kvp_t> LevelState::getKeyValueList() {
+    std::vector<level_map_kvp_t> dest;
+    for(level_map_t::const_iterator it = m_level_map.begin(); it != m_level_map.end(); ++it) {
+        dest.push_back(*it);
+    }
+    return dest;
+}
+
+std::vector<AGameObject*> LevelState::getValueList() {
+    std::vector<AGameObject*> values;
+    for(level_map_t::iterator it = m_level_map.begin(); it != m_level_map.end(); ++it) {
+        values.push_back(it->second);
+    }
+    return values;
 }

@@ -33,9 +33,14 @@ public:
     // loads the level in the res folder
     void loadLevel(int level_index);
 private:
+    // sometimes we need to keep a copy if we're deleting and iterating
+    std::vector< std::pair<std::pair<double,double>, AGameObject*> > getKeyValueList();
+    // sometimes we need to pass a value list to the renderer
+    std::vector<AGameObject*> getValueList();
+    // represents the underlying state of the level
     std::map<std::pair<double, double>, AGameObject*> m_level_map;
+    // path for loading levels by number
     std::string m_level_res_path;
-    void clear();
 };
 
 #endif

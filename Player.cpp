@@ -24,7 +24,9 @@ void Player::handleEvent(SDL_Event event) {
                     m_held = NULL;
                 }
             }
-            else if (m_level_state->isAtPosition(left()) && !m_level_state->isAtPosition(relativePosition(-1,1))) {
+            else if (m_level_state->isAtPosition(left())
+                     && !m_level_state->isAtPosition(relativePosition(-1,1))
+                     && !m_level_state->isAtPosition(up())) {
                 AGameObject* go = m_level_state->getAtPosition(left());
                 if (go->isMovable()) {
                     m_held = go;
