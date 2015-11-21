@@ -1,11 +1,11 @@
-HEADERS = $(shell find $(CURDIR) -name '*.hpp')
+HEADERS = $(shell find $(CURDIR) -maxdepth 1 -name '*.hpp')
 OBJECTS = $(subst .hpp,.o,$(HEADERS)) main.o
 TESTS = PlayerTestSuite.hpp
 
 BUILD_DIR := $(CURDIR)/build
 LIB_DIR := $(CURDIR)/lib
 
-CXXTEST_HOME = cxxtest-4.4
+CXXTEST_HOME = $(LIB_DIR)/cxxtest-4.4
 CXXTEST_GEN = $(CXXTEST_HOME)/bin/cxxtestgen
 CXXTEST_INCLUDE = $(CXXTEST_HOME)
 
@@ -65,6 +65,7 @@ install:
 			rm -f $(SDL_GFX_BUILD_PATH)/lib/libSDL2_gfx-*; \
 		fi; \
 	fi
+
 PlayerTestSuite.cpp: PlayerTestSuite.hpp
 	$(CXXTEST_GEN) --error-printer @< -o $@
 
