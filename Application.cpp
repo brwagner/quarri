@@ -12,12 +12,9 @@ void Application::start() {
     int height = 600;
     Display display = Display(name, width, height);
 
-    // the list of all the gameobjects in the level
-    std::vector<AGameObject*> level;
-    level.push_back(new Player(std::make_pair(100.0,0.0), true));// create a new player
-    level.push_back(new Block(std::make_pair(0.0,0.0), true, Constants::WALL_COLOR));
-    LevelState levelState(&level);
-
+    LevelState levelState("res/level/");
+    levelState.loadLevel(1);
+    
     // the update loop
     SDL_Event event; // the event currently being handled
     bool running = true;

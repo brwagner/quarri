@@ -8,6 +8,7 @@ const std::pair<double, double> AGameObject::getPos() const { return m_pos; }
 bool AGameObject::move(std::pair<double, double> pos) {
     if (m_level_state->move(m_pos, pos)) {
         m_pos = pos;
+        move(down());
         return true;
     }
     return false;
