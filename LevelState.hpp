@@ -4,6 +4,7 @@
 #include "SDL.h"
 #include <utility>
 #include <map>
+#include <string>
 #include <vector>
 
 #include "Display.hpp"
@@ -14,7 +15,8 @@ class Display;
 
 class LevelState {
 public:
-    LevelState(std::vector<AGameObject*>* gameObjects);
+    // specify the path to load levels from
+    LevelState(std::string level_res_path);
     // returns object at the given position, or null if none can be found
     // should use isObjectAtPosition to check for validity before using
     AGameObject* getAtPosition(const std::pair<double,double> pos);
@@ -28,8 +30,12 @@ public:
     void renderTo(Display* display);
     // passes events down to each GameObject
     void handleEvent(SDL_Event event);
+    // loads the level in the res folder
+    void loadLevel(int level_index);
 private:
     std::map<std::pair<double, double>, AGameObject*> m_level_map;
+    std::string m_level_res_path;
+    void clear();
 };
 
 #endif

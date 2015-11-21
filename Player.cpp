@@ -9,16 +9,22 @@ void Player::update() {}
 void Player::handleEvent(SDL_Event event) {
     if (event.type == SDL_KEYDOWN) {
         if (event.key.keysym.sym == SDLK_a) {
-            move(left());
+            // Try to move up a level if possible
+            if (!move(relativePosition(-1,1))) {
+                move(left());
+            }
         } else if (event.key.keysym.sym == SDLK_d) {
-            move(right());
+            // Try to move up a level if possible
+            if (!move(relativePosition(1,1))) {
+                move(right());
+            }
         } else if (event.key.keysym.sym == SDLK_s) {
             if (m_held) {
                 if (m_held->move(left())) {
                     m_held = NULL;
                 }
             }
-            else if (m_level_state->isAtPosition(left())) {
+            else if (m_level_state->isAtPosition(left()) && !m_level_state->isAtPosition(relativePosition(-1,1))) {
                 AGameObject* go = m_level_state->getAtPosition(left());
                 if (go->isMovable()) {
                     m_held = go;
@@ -33,7 +39,11 @@ bool Player::move(std::pair<double, double> pos) {
     if (m_held) {
         std::pair<double, double> pos_up = std::pair<double, double>(pos);
         pos_up.second += Constants::PLAYER_SIZE;
-        return m_held->move(pos_up) && AGameObject::move(pos);
+        if (!m_level_state->isAtPosition(pos) && !m_level_state->isAtPosition(pos_up)) {
+            AGameObject::move(pos) && m_held->move(pos_up);
+            return true;
+        }
+        return false;
     } else {
         return AGameObject::move(pos);
     }
