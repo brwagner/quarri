@@ -67,7 +67,7 @@ install:
 	fi
 
 PlayerTestSuite.cpp: PlayerTestSuite.hpp
-	$(CXXTEST_GEN) --error-printer @< -o $@
+	$(CXXTEST_GEN) --error-printer $< -o $@
 
 test: PlayerTestSuite.hpp PlayerTestSuite.cpp
 	g++ PlayerTestSuite.cpp -I$(CXXTEST_INCLUDE) -o $@
