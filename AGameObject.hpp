@@ -21,7 +21,7 @@ public:
     // respond to events such as key input
     virtual void handleEvent(SDL_Event event) = 0;
     // render this GameObject to the screen
-    virtual void draw(SDL_Renderer* renderer) = 0;
+    virtual void draw(SDL_Renderer* renderer, int xOff) = 0;
     // checks if there's already someone in the position
     // update's position in the GameObject and LevelState
     // returns true if the move was successful

@@ -8,9 +8,9 @@ void Block::update() {}
 
 void Block::handleEvent(SDL_Event event) {}
 
-void Block::draw(SDL_Renderer* renderer) {
+void Block::draw(SDL_Renderer* renderer, int xOff) {
     boxColor(renderer,
-             getPos().first, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second,
-             getPos().first + Constants::PLAYER_SIZE, Constants::SCREEN_HEIGHT - getPos().second,
+             getPos().first + xOff, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second,
+             getPos().first + Constants::PLAYER_SIZE + xOff, Constants::SCREEN_HEIGHT - getPos().second,
              m_color);
 }

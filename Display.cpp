@@ -9,6 +9,7 @@ Display::Display(const char * name, int width, int height) : m_width(width), m_h
                               SDL_WINDOW_SHOWN);
     
     m_renderer = SDL_CreateRenderer(m_window, 0, SDL_RENDERER_ACCELERATED);
+    m_cameraOffX = 0;
 }
 
 void Display::render(std::vector<AGameObject*> * level) {
@@ -18,11 +19,15 @@ void Display::render(std::vector<AGameObject*> * level) {
     
     // Draw the gameobjects to the renderer
     for (std::vector<AGameObject*>::const_iterator it = level->begin(); it != level->end(); ++it) {
-        (*it)->draw(m_renderer);
+        (*it)->draw(m_renderer, m_cameraOffX);
     }
     
     // render the renderer to the window
     SDL_RenderPresent(m_renderer);
+}
+
+void Display::moveCamera(int xOff) {
+    m_cameraOffX += xOff;
 }
 
 Display::~Display() {

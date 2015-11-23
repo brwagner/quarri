@@ -12,7 +12,7 @@ void Application::start() {
     int height = 600;
     Display display = Display(name, width, height);
 
-    LevelState levelState("res/level/", 1);
+    LevelState levelState("res/level/", 1, &display);
     
     // the update loop
     SDL_Event event; // the event currently being handled
@@ -26,6 +26,6 @@ void Application::start() {
             levelState.handleEvent(event);
         }
         levelState.update();
-        levelState.renderTo(&display);
+        levelState.renderToDisplay();
     }
 }

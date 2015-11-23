@@ -20,6 +20,8 @@ public:
     void render(std::vector<AGameObject*> * level);
     // cleans up the window and renderer components
     ~Display();
+    //Moves the camera to the left or right
+    void moveCamera(int xOff);
 private:
     // the width of the window
     int m_width;
@@ -29,6 +31,8 @@ private:
     SDL_Renderer* m_renderer;
     // the application window
     SDL_Window* m_window;
+    //The cameraOffset
+    int m_cameraOffX;
 };
 
 #endif

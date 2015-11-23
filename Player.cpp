@@ -8,7 +8,13 @@ void Player::update() {}
 
 void Player::handleEvent(SDL_Event event) {
     if (event.type == SDL_KEYDOWN) {
-        if (event.key.keysym.sym == SDLK_a) {
+        if (event.key.keysym.sym == SDLK_LEFT) {
+            m_level_state->moveCamera(Constants::CAMERA_MOVE_AMOUNT);
+        }
+        else if (event.key.keysym.sym == SDLK_RIGHT) {
+            m_level_state->moveCamera(-Constants::CAMERA_MOVE_AMOUNT);
+        }
+        else if (event.key.keysym.sym == SDLK_a) {
             // Try to move up a level if possible
             if (!move(relativePosition(-1,1))) {
                 move(left());
@@ -50,9 +56,9 @@ bool Player::move(std::pair<double, double> pos) {
     }
 }
 
-void Player::draw(SDL_Renderer* renderer) {
+void Player::draw(SDL_Renderer* renderer, int xOff) {
     boxColor(renderer,
-             getPos().first, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second,
-             getPos().first + Constants::PLAYER_SIZE, Constants::SCREEN_HEIGHT - getPos().second,
+             getPos().first + xOff, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second,
+             getPos().first + Constants::PLAYER_SIZE + xOff, Constants::SCREEN_HEIGHT - getPos().second,
              Constants::PLAYER_COLOR);
 }

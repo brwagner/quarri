@@ -11,6 +11,7 @@ public:
     static const char * APP_NAME;
 
     static int PLAYER_SIZE;
+    static int CAMERA_MOVE_AMOUNT;
 
     static unsigned int PLAYER_COLOR;
     static unsigned int WALL_COLOR;

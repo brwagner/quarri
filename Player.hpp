@@ -10,7 +10,7 @@ public:
     Player(std::pair<double, double> pos, bool movable);
     virtual void update();
     virtual void handleEvent(SDL_Event event);
-    virtual void draw(SDL_Renderer* renderer);
+    virtual void draw(SDL_Renderer* renderer, int xOff);
     // checks if player AND held block can move
     virtual bool move(std::pair<double, double> pos);
 private:

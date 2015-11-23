@@ -9,7 +9,7 @@
 typedef std::map<std::pair<double, double>, AGameObject*> level_map_t;
 typedef std::pair<std::pair<double,double>, AGameObject*> level_map_kvp_t;
 
-LevelState::LevelState(const std::string level_res_path, int current_level) : m_level_res_path(level_res_path), m_current_level(current_level) {
+LevelState::LevelState(const std::string level_res_path, int current_level, Display * display) : m_level_res_path(level_res_path), m_current_level(current_level), m_display(display) {
     loadLevel(m_current_level);
 }
 
@@ -45,9 +45,13 @@ void LevelState::update() {
     }
 }
 
-void LevelState::renderTo(Display* display) {
+void LevelState::renderToDisplay() {
     std::vector<AGameObject*> values = getValueList();
-    display->render(&values);
+    m_display->render(&values);
+}
+
+void LevelState::moveCamera(int xOff) {
+    m_display->moveCamera(xOff);
 }
 
 void LevelState::handleEvent(SDL_Event event) {
