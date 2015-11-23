@@ -5,9 +5,11 @@
 class PlayerTestSuite : public CxxTest::TestSuite
 {
 public:
-
-  void test_Nothing()
+ 
+  void test_Constructor()
   {
-    TS_ASSERT(true);
+    std::pair<double,double> pos = std::pair<double, double>(1.0, -1.0);
+    Player p = Player(pos, true);
+    //TS_ASSERT(pos == p.relativePosition(0,0));
   }
 };

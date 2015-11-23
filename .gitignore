@@ -11,7 +11,12 @@ build
 lib/SDL2-2.0.3
 lib/SDL2_gfx-1.0.1
 
-# Main executable
+# Crap from cxxtest
+*TestSuite.cpp
+runner.cpp
+runner
+
+# Main exe
 main
 
 # Logs and databases #

@@ -60,7 +60,7 @@ void LevelState::loadLevel(int level_index) {
     out << level_index;
     level_to_load += out.str() + ".quar";
     // create the file stream
-    std::ifstream level_in(level_to_load);
+    std::ifstream level_in(level_to_load.c_str());
     
     // read lines into a vector
     std::string line;
