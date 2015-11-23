@@ -16,7 +16,7 @@ class Display;
 class LevelState {
 public:
     // specify the path to load levels from
-    LevelState(std::string level_res_path);
+    LevelState(std::string level_res_path, int current_level);
     // returns object at the given position, or null if none can be found
     // should use isObjectAtPosition to check for validity before using
     AGameObject* getAtPosition(const std::pair<double,double> pos);
@@ -30,9 +30,13 @@ public:
     void renderTo(Display* display);
     // passes events down to each GameObject
     void handleEvent(SDL_Event event);
+    // registers that the player won
+    void registerWin();
+private:
+    // deletes gameobjects and clears the map
+    void clear();
     // loads the level in the res folder
     void loadLevel(int level_index);
-private:
     // sometimes we need to keep a copy if we're deleting and iterating
     std::vector< std::pair<std::pair<double,double>, AGameObject*> > getKeyValueList();
     // sometimes we need to pass a value list to the renderer
@@ -41,6 +45,10 @@ private:
     std::map<std::pair<double, double>, AGameObject*> m_level_map;
     // path for loading levels by number
     std::string m_level_res_path;
+    // the number of the current level
+    int m_current_level;
+    // should we load the next level
+    bool m_should_load;
 };
 
 #endif

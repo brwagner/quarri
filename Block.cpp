@@ -2,7 +2,7 @@
 #include "SDL2_gfxPrimitives.h"
 #include "Constants.hpp"
 
-Block::Block(std::pair<double, double> pos, bool movable, int color) : m_color(color), AGameObject(pos, movable) {}
+Block::Block(std::pair<double, double> pos, bool movable, int color) : m_color(color), AGameObject(pos, movable, false) {}
 
 void Block::update() {}
 

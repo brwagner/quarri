@@ -1,7 +1,7 @@
 #include "AGameObject.hpp"
 #include "Constants.hpp"
 
-AGameObject::AGameObject(std::pair<double, double> pos, bool movable) : m_pos(pos), m_movable(movable) {}
+AGameObject::AGameObject(std::pair<double, double> pos, bool movable, bool player) : m_pos(pos), m_movable(movable), m_player(player) {}
 
 const std::pair<double, double> AGameObject::getPos() const { return m_pos; }
 
@@ -17,6 +17,8 @@ bool AGameObject::move(std::pair<double, double> pos) {
 void AGameObject::setLevelState(LevelState * level_state) { m_level_state = level_state; }
 
 const bool AGameObject::isMovable() const { return m_movable; }
+
+const bool AGameObject::isPlayer() const { return m_player; }
 
 std::pair<double, double> AGameObject::relativePosition(int x, int y) {
     std::pair<double, double> pos = getPos();

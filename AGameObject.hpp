@@ -14,7 +14,8 @@ class LevelState;
 
 class AGameObject {
 public:
-    AGameObject(std::pair<double, double> pos, bool movable);
+    AGameObject(std::pair<double, double> pos, bool movable, bool player);
+    virtual ~AGameObject() {}
     // update is called every frame
     virtual void update() = 0;
     // respond to events such as key input
@@ -35,6 +36,7 @@ public:
     void setLevelState(LevelState * level_state);
     const std::pair<double, double> getPos() const;
     const bool isMovable() const;
+    const bool isPlayer() const;
 protected:
     // a reference to other gameobejcts
     LevelState * m_level_state;
@@ -43,6 +45,8 @@ private:
     std::pair<double,double> m_pos;
     // can this be picked up?
     bool m_movable;
+    // is this the player
+    bool m_player;
 };
 
 #endif

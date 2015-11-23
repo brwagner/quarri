@@ -2,13 +2,16 @@
 #include "Constants.hpp"
 #include "Block.hpp"
 #include "Player.hpp"
+#include "WinCond.hpp"
 #include <fstream>
 #include <sstream>
 
 typedef std::map<std::pair<double, double>, AGameObject*> level_map_t;
 typedef std::pair<std::pair<double,double>, AGameObject*> level_map_kvp_t;
 
-LevelState::LevelState(const std::string level_res_path) : m_level_res_path(level_res_path) {}
+LevelState::LevelState(const std::string level_res_path, int current_level) : m_level_res_path(level_res_path), m_current_level(current_level) {
+    loadLevel(m_current_level);
+}
 
 AGameObject* LevelState::getAtPosition(const std::pair<double, double> pos) {
     level_map_t::iterator it = m_level_map.find(pos);
@@ -37,6 +40,9 @@ void LevelState::update() {
     for (level_map_t::iterator it = m_level_map.begin(); it != m_level_map.end(); it++) {
         it->second->update();
     }
+    if (m_should_load) {
+        loadLevel(m_current_level);
+    }
 }
 
 void LevelState::renderTo(Display* display) {
@@ -51,9 +57,16 @@ void LevelState::handleEvent(SDL_Event event) {
     }
 }
 
+void LevelState::registerWin() {
+    m_should_load = true;
+    m_current_level++;
+}
+
 void LevelState::loadLevel(int level_index) {
+    // set load flag to false
+    m_should_load = false;
     // clear the map of existing gameobjects
-    m_level_map.clear();
+    clear();
     // get the path of the level to load
     std::string level_to_load = m_level_res_path;
     std::stringstream out;
@@ -83,6 +96,8 @@ void LevelState::loadLevel(int level_index) {
                 current_obj = new Block(pos, true, Constants::MOVABLE_COLOR);
             } else if (*it == 'P') {
                 current_obj = new Player(pos, false);
+            } else if (*it == 'W') {
+                current_obj = new WinCond(pos);
             } else {
                 current_obj = NULL;
             }
@@ -108,4 +123,12 @@ std::vector<AGameObject*> LevelState::getValueList() {
         values.push_back(it->second);
     }
     return values;
+}
+
+void LevelState::clear() {
+    std::vector<level_map_kvp_t> kvps = getKeyValueList();
+    for (std::vector<level_map_kvp_t>::const_iterator it = kvps.begin(); it != kvps.end(); ++it) {
+        delete it->second;
+    }
+    m_level_map.clear();
 }
