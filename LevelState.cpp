@@ -136,3 +136,4 @@ void LevelState::clear() {
     }
     m_level_map.clear();
 }
+

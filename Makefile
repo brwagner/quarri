@@ -1,8 +1,14 @@
-HEADERS = $(shell find $(CURDIR) -name '*.hpp')
-OBJECTS = $(subst .hpp,.o,$(HEADERS)) main.o
+HEADERS = AGameObject.hpp Application.hpp Block.hpp Constants.hpp Display.hpp LevelState.hpp Player.hpp WinCond.hpp
+OBJECTS = $(subst .hpp,.o,$(HEADERS))
+
+TESTS = PlayerTestSuite.cpp AGameObjectTestSuite.cpp
 
 BUILD_DIR := $(CURDIR)/build
 LIB_DIR := $(CURDIR)/lib
+
+CXXTEST_HOME = $(LIB_DIR)/cxxtest-4.4
+CXXTEST_GEN = $(CXXTEST_HOME)/bin/cxxtestgen
+CXXTEST_INCLUDE = $(CXXTEST_HOME)
 
 SDL_SOURCE_PATH := $(LIB_DIR)/SDL2-2.0.3
 SDL_BUILD_PATH := $(BUILD_DIR)/SDL2_Build
@@ -21,17 +27,19 @@ SDL_GFX_FLAGS := -lSDL2_gfx
 all: main
 	./main
 
-main: $(OBJECTS)
+main: $(OBJECTS) main.o
 	g++ $^ $(SDL_LIB) $(SDL_GFX_LIB) $(SDL_INCLUDE) $(SDL_GFX_INCLUDE) $(SDL_FLAGS) $(SDL_GFX_FLAGS) -o main
 
 %.o: %.cpp $(HEADERS)
 	g++ -c $(SDL_INCLUDE) $(SDL_GFX_INCLUDE) $< -o $@
 
 clean:
-	rm -f *.o main
+	rm -f *.o main 
 
 clean-install:
 	rm -r -f $(SDL_GFX_SOURCE_PATH) $(SDL_SOURCE_PATH) $(BUILD_DIR)
+clean-test:
+	rm -r -f $(TESTS) test runner.cpp
 
 install:
 	@mkdir -p $(BUILD_DIR)
@@ -60,3 +68,15 @@ install:
 			rm -f $(SDL_GFX_BUILD_PATH)/lib/libSDL2_gfx-*; \
 		fi; \
 	fi
+
+test: runner
+	./runner
+
+runner: runner.cpp $(TESTS) $(HEADERS) $(OBJECTS) 
+	g++ runner.cpp $(OBJECTS) $(TESTS) -I$(CXXTEST_INCLUDE) $(SDL_INCLUDE) $(SDL_GFX_INCLUDE) $(SDL_LIB) $(SDL_GFX_LIB) $(SDL_FLAGS) $(SDL_GFX_FLAGS) -o $@
+
+runner.cpp: 
+	$(CXXTEST_GEN) --root --error-printer -o $@
+
+%TestSuite.cpp: %TestSuite.hpp
+	$(CXXTEST_GEN) --part --error-printer $< -o $@
