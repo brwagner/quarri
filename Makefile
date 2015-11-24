@@ -49,7 +49,7 @@ clean-misc:
 	git checkout lib/cxxtest-4.4/python/cxxtest/*
 
 clean-install:
-	rm -r -f $(SDL_GFX_SOURCE_PATH) $(SDL_SOURCE_PATH) $(BUILD_DIR)
+	rm -r -f $(BUILD_DIR)/*
 
 install:
 	@if ! [ -d $(SDL_SOURCE_PATH) ]; then tar -zxvf $(SDL_SOURCE_PATH).tar.gz -C $(LIB_DIR); fi; \
