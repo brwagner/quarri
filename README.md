@@ -3,9 +3,13 @@ A remake of the math class classic BlockDude, where you play an adorable forklif
 
 ## Running from binary
 In the quarri distribution folder you should see:
+
 * main
+* runner
 * res/
+
 Run main from the command line using ./main. Running main by double clicking will just pop up an empty screen.
+Run the tests from the command line using ./tests.
 If you need to make a distribution run 'make dist' in source.
 
 ## Compiling from source
