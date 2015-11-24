@@ -26,7 +26,7 @@ SDL_GFX_LIB := -L$(SDL_GFX_BUILD_PATH)/lib
 SDL_GFX_INCLUDE := -I$(SDL_GFX_BUILD_PATH)/include/SDL2
 SDL_GFX_FLAGS := -lSDL2_gfx
 
-.PHONY: all clean
+.PHONY: all clean test dist
 
 all: main
 	./main
@@ -52,7 +52,6 @@ clean-install:
 	rm -r -f $(SDL_GFX_SOURCE_PATH) $(SDL_SOURCE_PATH) $(BUILD_DIR)
 
 install:
-	@mkdir -p $(BUILD_DIR)
 	@if ! [ -d $(SDL_SOURCE_PATH) ]; then tar -zxvf $(SDL_SOURCE_PATH).tar.gz -C $(LIB_DIR); fi; \
 	if ! [ -d $(SDL_GFX_SOURCE_PATH) ]; then tar xvf $(SDL_GFX_SOURCE_PATH).tar.gz -C $(LIB_DIR); fi; \
 	if [ -d $(SDL_BUILD_PATH) ]; \
@@ -85,7 +84,7 @@ test: runner
 runner: out/runner.cpp $(TESTS) $(HEADERS) $(OBJECTS)
 	g++ out/runner.cpp $(OBJECTS) $(TESTS) -I$(SRC_DIR) -I$(CXXTEST_INCLUDE) $(SDL_INCLUDE) $(SDL_GFX_INCLUDE) $(SDL_LIB) $(SDL_GFX_LIB) $(SDL_FLAGS) $(SDL_GFX_FLAGS) -o $@
 
-out/runner.cpp: 
+out/runner.cpp:
 	$(CXXTEST_GEN) --root --error-printer -o $@
 
 out/%TestSuite.cpp: test/%TestSuite.hpp

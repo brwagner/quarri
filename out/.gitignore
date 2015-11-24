@@ -1,0 +1,4 @@
+# Don't include anything
+*
+# Ensure this folder stays
+!.gitignore
