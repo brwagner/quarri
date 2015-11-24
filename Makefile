@@ -1,10 +1,14 @@
-HEADERS = AGameObject.hpp Application.hpp Block.hpp Constants.hpp Display.hpp LevelState.hpp Player.hpp WinCond.hpp
-OBJECTS = $(subst .hpp,.o,$(HEADERS))
+HEADERS = $(wildcard src/*.hpp)
+OBJECTS = $(addprefix out/, $(notdir $(subst .hpp,.o,$(HEADERS))))
 
-TESTS = PlayerTestSuite.cpp AGameObjectTestSuite.cpp
+TEST_HEADERS = $(wildcard test/*TestSuite.hpp)
+TESTS = $(addprefix out/, $(notdir $(subst .hpp,.cpp,$(TEST_HEADERS))))
 
 BUILD_DIR := $(CURDIR)/build
 LIB_DIR := $(CURDIR)/lib
+SRC_DIR := src
+RES_DIR := res
+LEVEL_DIR := $(RES_DIR)/level
 
 CXXTEST_HOME = $(LIB_DIR)/cxxtest-4.4
 CXXTEST_GEN = $(CXXTEST_HOME)/bin/cxxtestgen
@@ -27,23 +31,29 @@ SDL_GFX_FLAGS := -lSDL2_gfx
 all: main
 	./main
 
-main: $(OBJECTS) main.o
+main: $(OBJECTS) out/main.o
 	g++ $^ $(SDL_LIB) $(SDL_GFX_LIB) $(SDL_INCLUDE) $(SDL_GFX_INCLUDE) $(SDL_FLAGS) $(SDL_GFX_FLAGS) -o main
 
-%.o: %.cpp $(HEADERS)
+out/%.o: src/%.cpp $(HEADERS)
 	g++ -c $(SDL_INCLUDE) $(SDL_GFX_INCLUDE) $< -o $@
 
 clean:
-	rm -f *.o main 
+	rm -f QuarriDist.zip
+	rm -f out/*
+	git checkout lib/cxxtest-4.4/python/cxxtest/*
+
+clean-test:
+	rm -r -f out/*.cpp
+
+clean-misc:
+	git checkout lib/cxxtest-4.4/python/cxxtest/*
 
 clean-install:
 	rm -r -f $(SDL_GFX_SOURCE_PATH) $(SDL_SOURCE_PATH) $(BUILD_DIR)
-clean-test:
-	rm -r -f $(TESTS) test runner.cpp
 
 install:
 	@mkdir -p $(BUILD_DIR)
-	if ! [ -d $(SDL_SOURCE_PATH) ]; then tar -zxvf $(SDL_SOURCE_PATH).tar.gz -C $(LIB_DIR); fi; \
+	@if ! [ -d $(SDL_SOURCE_PATH) ]; then tar -zxvf $(SDL_SOURCE_PATH).tar.gz -C $(LIB_DIR); fi; \
 	if ! [ -d $(SDL_GFX_SOURCE_PATH) ]; then tar xvf $(SDL_GFX_SOURCE_PATH).tar.gz -C $(LIB_DIR); fi; \
 	if [ -d $(SDL_BUILD_PATH) ]; \
 		then echo SDL Install complete. Please remove folder $(SDL_BUILD_PATH) if you want to reinstall; \
@@ -72,11 +82,14 @@ install:
 test: runner
 	./runner
 
-runner: runner.cpp $(TESTS) $(HEADERS) $(OBJECTS) 
-	g++ runner.cpp $(OBJECTS) $(TESTS) -I$(CXXTEST_INCLUDE) $(SDL_INCLUDE) $(SDL_GFX_INCLUDE) $(SDL_LIB) $(SDL_GFX_LIB) $(SDL_FLAGS) $(SDL_GFX_FLAGS) -o $@
+runner: out/runner.cpp $(TESTS) $(HEADERS) $(OBJECTS)
+	g++ out/runner.cpp $(OBJECTS) $(TESTS) -I$(SRC_DIR) -I$(CXXTEST_INCLUDE) $(SDL_INCLUDE) $(SDL_GFX_INCLUDE) $(SDL_LIB) $(SDL_GFX_LIB) $(SDL_FLAGS) $(SDL_GFX_FLAGS) -o $@
 
-runner.cpp: 
+out/runner.cpp: 
 	$(CXXTEST_GEN) --root --error-printer -o $@
 
-%TestSuite.cpp: %TestSuite.hpp
+out/%TestSuite.cpp: test/%TestSuite.hpp
 	$(CXXTEST_GEN) --part --error-printer $< -o $@
+
+dist: main runner $(LEVEL_DIR)
+	zip QuarriDist.zip -r $^

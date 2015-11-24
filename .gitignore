@@ -1,6 +1,9 @@
 # Object files
 *.o
 
+# Build
+QuarriDist.zip
+
 # Project specific
 *.xcodeproj
 

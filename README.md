@@ -1,7 +1,14 @@
 # Quarri
 A remake of the math class classic BlockDude, where you play an adorable forklift named Quarri who needs to solve puzzles consisting of moving and maneuver around blocks in order to bust out of block hell and find her real home
 
-## Installing and running
+## Running from binary
+In the quarri distribution folder you should see:
+* main
+* res/
+Run main from the command line using ./main. Running main by double clicking will just pop up an empty screen.
+If you need to make a distribution run 'make dist' in source.
+
+## Compiling from source
 #####WARNING: make sure the path you clone to doesn't have spaces in any directory name or the Makefile won't work
 
 1. git clone https://github.ccs.neu.edu/QuadPrism/Quarri.git
