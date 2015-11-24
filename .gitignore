@@ -14,6 +14,9 @@ build
 lib/SDL2-2.0.3
 lib/SDL2_gfx-1.0.1
 
+# Output folder
+out
+
 # Crap from cxxtest
 *TestSuite.cpp
 runner.cpp
