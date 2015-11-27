@@ -14,3 +14,7 @@ void Block::draw(SDL_Renderer* renderer, int xOff) {
              getPos().first + Constants::PLAYER_SIZE + xOff, Constants::SCREEN_HEIGHT - getPos().second,
              m_color);
 }
+
+int Block::getColor() {
+    return m_color;
+}

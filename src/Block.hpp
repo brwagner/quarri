@@ -9,6 +9,7 @@ public:
     virtual void update();
     virtual void handleEvent(SDL_Event event);
     virtual void draw(SDL_Renderer* renderer, int xOff);
+    virtual int getColor();
 private:
     int m_color;
 };

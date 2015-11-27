@@ -34,6 +34,7 @@ public:
     void registerWin();
     // moves the camera left or right the given amount
     void moveCamera(int xOff);
+
 private:
     // deletes gameobjects and clears the map
     void clear();
