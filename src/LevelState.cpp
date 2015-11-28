@@ -66,6 +66,10 @@ void LevelState::registerWin() {
     m_current_level++;
 }
 
+int LevelState::getCurrentLevel() {
+    return m_current_level;
+}
+
 void LevelState::loadLevel(int level_index) {
     // set load flag to false
     m_should_load = false;

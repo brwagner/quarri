@@ -34,6 +34,9 @@ public:
     void registerWin();
     // moves the camera left or right the given amount
     void moveCamera(int xOff);
+    // Returns the current level being played.
+    int getCurrentLevel();
+
 private:
     // deletes gameobjects and clears the map
     void clear();
