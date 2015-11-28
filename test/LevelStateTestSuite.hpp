@@ -26,7 +26,10 @@ public:
     
     void tearDown()
     {
-
+        delete display1;
+        delete levelState1;
+        delete display2;
+        delete levelState2;
     }
     
     void test_Constructor()
