@@ -14,7 +14,20 @@ public:
     // checks if player AND held block can move
     virtual bool move(std::pair<double, double> pos);
 private:
-    AGameObject * m_held; // the block the player is holding above its head
+    // gets position that the player would move to if they moved forward
+    std::pair<double, double> forwardPos();
+    // gets position that the player would move to if they moved up and forward
+    std::pair<double, double> forwardUpPos();
+    // check if the event corresponds to a movement event
+    bool isMoving(SDL_Event event);
+    // check if we're moving the direction we're facing
+    bool isMovingTowardsDir(SDL_Event event);
+    // check pickup bounds
+    bool isPickupValid();
+    // direction of the player
+    int m_dir;
+    // the block the player is holding above its head
+    AGameObject * m_held;
 };
 
 #endif

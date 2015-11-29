@@ -2,7 +2,10 @@
 #include "SDL2_gfxPrimitives.h"
 #include "Constants.hpp"
 
-Player::Player(std::pair<double, double> pos, bool movable) : m_held(NULL), AGameObject(pos, movable, true) {}
+#define LEFT -1
+#define RIGHT 1
+
+Player::Player(std::pair<double, double> pos, bool movable) : m_held(NULL), m_dir(LEFT), AGameObject(pos, movable, true) {}
 
 void Player::update() {}
 
@@ -14,25 +17,23 @@ void Player::handleEvent(SDL_Event event) {
         else if (event.key.keysym.sym == SDLK_RIGHT) {
             m_level_state->moveCamera(-Constants::CAMERA_MOVE_AMOUNT);
         }
-        else if (event.key.keysym.sym == SDLK_a) {
-            // Try to move up a level if possible
-            if (!move(relativePosition(-1,1))) {
-                move(left());
-            }
-        } else if (event.key.keysym.sym == SDLK_d) {
-            // Try to move up a level if possible
-            if (!move(relativePosition(1,1))) {
-                move(right());
+        else if (isMoving(event)) {
+            // check if we're moving the direction we're facing
+            if (isMovingTowardsDir(event)) {
+                // Try to move up a level if possible
+                if (!move(forwardUpPos())) {
+                    move(forwardPos());
+                }
+            } else {
+                m_dir *= -1; // flip the player
             }
         } else if (event.key.keysym.sym == SDLK_s) {
             if (m_held) {
-                if (m_held->move(left())) {
+                if (m_held->move(forwardPos())) {
                     m_held = NULL;
                 }
-            } else if (m_level_state->isAtPosition(left())
-                       && !m_level_state->isAtPosition(relativePosition(-1,1))
-                       && !m_level_state->isAtPosition(up())) {
-                AGameObject* go = m_level_state->getAtPosition(left());
+            } else if (isPickupValid()) {
+                AGameObject* go = m_level_state->getAtPosition(forwardPos());
                 if (go->isMovable()) {
                     m_held = go;
                     m_held->move(up());
@@ -40,6 +41,28 @@ void Player::handleEvent(SDL_Event event) {
             }
         }
     }
+}
+
+std::pair<double, double> Player::forwardPos() {
+    return relativePosition(m_dir, 0);
+}
+
+std::pair<double, double> Player::forwardUpPos() {
+    return relativePosition(m_dir, 1);
+}
+
+bool Player::isMoving(SDL_Event event) {
+    return event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_d;
+}
+
+bool Player::isMovingTowardsDir(SDL_Event event) {
+    return (event.key.keysym.sym == SDLK_a && m_dir == LEFT) || (event.key.keysym.sym == SDLK_d && m_dir == RIGHT);
+}
+
+bool Player::isPickupValid() {
+    return m_level_state->isAtPosition(forwardPos())
+        && !m_level_state->isAtPosition(relativePosition(m_dir*1,1))
+        && !m_level_state->isAtPosition(up());
 }
 
 bool Player::move(std::pair<double, double> pos) {
