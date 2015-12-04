@@ -10,6 +10,7 @@ QuarriDist.zip
 # Extracted libs
 lib/SDL2-2.0.3
 lib/SDL2_gfx-1.0.1
+lib/SDL2_mixer-2.0.0
 
 # Crap from cxxtest
 *TestSuite.cpp

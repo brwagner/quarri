@@ -17,6 +17,8 @@ class LevelState {
 public:
     // specify the path to load levels from
     LevelState(std::string level_res_path, int current_level, Display* display);
+    // should clear anything left in the level
+    ~LevelState();
     // returns object at the given position, or null if none can be found
     // should use isObjectAtPosition to check for validity before using
     AGameObject* getAtPosition(const std::pair<double,double> pos);

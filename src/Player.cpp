@@ -5,7 +5,15 @@
 #define LEFT -1
 #define RIGHT 1
 
-Player::Player(std::pair<double, double> pos, bool movable) : m_held(NULL), m_dir(LEFT), AGameObject(pos, movable, true) {}
+Player::Player(std::pair<double, double> pos, bool movable) : m_held(NULL), m_dir(LEFT), AGameObject(pos, movable, true) {
+    m_boop_sound = Mix_LoadWAV("res/sounds/boop.wav");
+    m_woosh_sound = Mix_LoadWAV("res/sounds/woosh.wav");
+}
+
+Player::~Player() {
+    Mix_FreeChunk(m_boop_sound);
+    Mix_FreeChunk(m_woosh_sound);
+}
 
 void Player::update() {}
 
@@ -20,12 +28,13 @@ void Player::handleEvent(SDL_Event event) {
         else if (isMoving(event)) {
             // check if we're moving the direction we're facing
             if (isMovingTowardsDir(event)) {
-                // Try to move up a level if possible
-                if (!move(forwardUpPos())) {
-                    move(forwardPos());
+                // Try to move up a level if possible if not try forward
+                if (move(forwardUpPos()) || move(forwardPos())) {
+                    Mix_PlayChannel(-1, m_boop_sound, 0);
                 }
             } else {
                 m_dir *= -1; // flip the player
+                Mix_PlayChannel(-1, m_woosh_sound, 0);
             }
         } else if (event.key.keysym.sym == SDLK_s) {
             if (m_held) {
