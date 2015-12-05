@@ -13,6 +13,10 @@ LevelState::LevelState(const std::string level_res_path, int current_level, Disp
     loadLevel(m_current_level);
 }
 
+LevelState::~LevelState() {
+  clear();
+}
+
 AGameObject* LevelState::getAtPosition(const std::pair<double, double> pos) {
     level_map_t::iterator it = m_level_map.find(pos);
     if (it != m_level_map.end()) {
