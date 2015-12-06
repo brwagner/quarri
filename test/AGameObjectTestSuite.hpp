@@ -93,7 +93,5 @@ public:
     TS_ASSERT(dpos == goWall->right());
   }
   
-  
-  
 };
 
