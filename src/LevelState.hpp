@@ -15,8 +15,12 @@ class Display;
 
 class LevelState {
 public:
+    // Loads a level with the list of given gameobjects for testing purposes
+    LevelState(std::vector<AGameObject*> gameobjects, int current_level, Display* display);
     // specify the path to load levels from
     LevelState(std::string level_res_path, int current_level, Display* display);
+    // should clear anything left in the level
+    ~LevelState();
     // returns object at the given position, or null if none can be found
     // should use isObjectAtPosition to check for validity before using
     AGameObject* getAtPosition(const std::pair<double,double> pos);
@@ -42,6 +46,8 @@ private:
     void clear();
     // loads the level in the res folder
     void loadLevel(int level_index);
+    //Adds the given AGameobjects to the level map
+    void addAllToLevelState(std::vector<AGameObject*> gameObjects);
     // sometimes we need to keep a copy if we're deleting and iterating
     std::vector< std::pair<std::pair<double,double>, AGameObject*> > getKeyValueList();
     // sometimes we need to pass a value list to the renderer

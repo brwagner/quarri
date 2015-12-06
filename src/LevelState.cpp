@@ -9,8 +9,16 @@
 typedef std::map<std::pair<double, double>, AGameObject*> level_map_t;
 typedef std::pair<std::pair<double,double>, AGameObject*> level_map_kvp_t;
 
+LevelState::LevelState(std::vector<AGameObject*> gameObjects, int current_level, Display* display) :m_current_level(current_level), m_display(display) {
+    addAllToLevelState(gameObjects);
+}
+
 LevelState::LevelState(const std::string level_res_path, int current_level, Display * display) : m_level_res_path(level_res_path), m_current_level(current_level), m_display(display) {
     loadLevel(m_current_level);
+}
+
+LevelState::~LevelState() {
+  clear();
 }
 
 AGameObject* LevelState::getAtPosition(const std::pair<double, double> pos) {
@@ -19,6 +27,15 @@ AGameObject* LevelState::getAtPosition(const std::pair<double, double> pos) {
         return it->second;
     }
     return NULL;
+}
+
+void LevelState::addAllToLevelState(std::vector<AGameObject*> gameObjects) {
+    for (std::vector<AGameObject*>::iterator it = gameObjects.begin(); it != gameObjects.end(); it++) {
+        AGameObject * current_obj = *it;
+        std::pair<double, double> pair = current_obj->getPos();
+        current_obj->setLevelState(this);
+        m_level_map[pair] = current_obj;
+    }
 }
 
 bool LevelState::move(const std::pair<double,double> from, const std::pair<double,double> to) {
