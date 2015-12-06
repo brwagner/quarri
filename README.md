@@ -1,6 +1,9 @@
 # Quarri
 A remake of the math class classic BlockDude, where you play an adorable forklift named Quarri who needs to solve puzzles consisting of moving and maneuver around blocks in order to bust out of block hell and find her real home
 
+# Supported Platforms
+Linux, Mac, Windows if make installed
+
 ## Running from binary
 In the quarri distribution folder you should see:
 * main
@@ -18,7 +21,7 @@ If you need to make a distribution run 'make dist' in source.
 5. ./main
 
 ## Objective
-Get to the exit
+Get to the green block to advance to the next level, until there no levels left!
 
 ## Controls
 Left and right arrows move left and right. (see movement)
