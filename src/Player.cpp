@@ -89,8 +89,334 @@ bool Player::move(std::pair<double, double> pos) {
 }
 
 void Player::draw(SDL_Renderer* renderer, int xOff) {
+    double x = getPos().first + xOff;
+    double y = getPos().second;
+    if (m_dir == RIGHT && !m_held) {
+    //Quarri facing right
+    // monitor front
     boxColor(renderer,
-             getPos().first + xOff, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second,
-             getPos().first + Constants::PLAYER_SIZE + xOff, Constants::SCREEN_HEIGHT - getPos().second,
-             Constants::PLAYER_COLOR);
+            x + Constants::PLAYER_BACK, Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT - y,
+            x + Constants::PLAYER_SIZE - Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - y,
+            Constants::MONITOR_COLOR);
+    
+    // monitor shading
+    boxColor(renderer,
+            x + Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT - y,
+            x + Constants::BOX_SPACE + Constants::SHADE_WIDTH, Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - y,
+            Constants::MONITOR_SHADING_COLOR);
+    
+    // screen
+    boxColor(renderer,
+            x + Constants::BOX_SPACE + Constants::PLAYER_BACK,
+            Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+            x + (6.9 * Constants::BOX_SPACE) - Constants::SHADE_WIDTH + Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+            Constants::SCREEN_COLOR);
+    
+    // left tire
+    filledEllipseColor(renderer,
+                      x + Constants::BOX_SPACE + Constants::SHADE_WIDTH, Constants::SCREEN_HEIGHT - Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::TIRE_COLOR);
+    
+    // right tire
+    filledEllipseColor(renderer,
+                      x + (7 * Constants::BOX_SPACE), Constants::SCREEN_HEIGHT - Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::TIRE_COLOR);
+    
+    // left eye
+    boxColor(renderer,
+            x + Constants::PLAYER_SIZE - 4 * Constants::BOX_SPACE - Constants::EYE_WIDTH - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT + 2 * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 4 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT * 1.25 + 3 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // right eye
+    boxColor(renderer,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::EYE_WIDTH - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT + 2 * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT * 1.25 + 3 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // mouth
+    boxColor(renderer,
+            x + 2 * Constants::BOX_SPACE + Constants::PLAYER_BACK - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - 2 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // left arm
+    lineColor(renderer,
+             x + (Constants::BOX_SPACE / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+             x + Constants::BOX_SPACE + (Constants::SHADE_WIDTH / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+             Constants::TIRE_COLOR);
+    
+    // right arm
+    lineColor(renderer,
+             x + Constants::PLAYER_SIZE + (Constants::BOX_SPACE / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+             x + Constants::PLAYER_SIZE, Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+             Constants::TIRE_COLOR);
+    
+    // left hand
+    filledEllipseColor(renderer,
+                      x + (Constants::BOX_SPACE / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::MONITOR_COLOR);
+    
+    // right hand
+    filledEllipseColor(renderer,
+                      x + Constants::PLAYER_SIZE + (Constants::BOX_SPACE / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::MONITOR_COLOR);
+  }
+  else if (m_dir == RIGHT && m_held) {
+    // facing right arms up
+    // monitor front
+    boxColor(renderer,
+            x + Constants::PLAYER_BACK, Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT - y,
+            x + Constants::PLAYER_SIZE - Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - y,
+            Constants::MONITOR_COLOR);
+    
+    // monitor shading
+    boxColor(renderer,
+            x + Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT - y,
+            x + Constants::BOX_SPACE + Constants::SHADE_WIDTH, Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - y,
+            Constants::MONITOR_SHADING_COLOR);
+    
+    // screen
+    boxColor(renderer,
+            x + Constants::BOX_SPACE + Constants::PLAYER_BACK,
+            Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+            x + (6.9 * Constants::BOX_SPACE) - Constants::SHADE_WIDTH + Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+            Constants::SCREEN_COLOR);
+    
+    // left tire
+    filledEllipseColor(renderer,
+                      x + Constants::BOX_SPACE + Constants::SHADE_WIDTH, Constants::SCREEN_HEIGHT - Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::TIRE_COLOR);
+    
+    // right tire
+    filledEllipseColor(renderer,
+                      x + (7 * Constants::BOX_SPACE), Constants::SCREEN_HEIGHT - Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::TIRE_COLOR);
+    
+    // left eye
+    boxColor(renderer,
+            x + Constants::PLAYER_SIZE - 4 * Constants::BOX_SPACE - Constants::EYE_WIDTH - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT + 2 * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 4 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT * 1.25 + 3 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // right eye
+    boxColor(renderer,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::EYE_WIDTH - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT + 2 * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT * 1.25 + 3 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // mouth
+    boxColor(renderer,
+            x + 2 * Constants::BOX_SPACE + Constants::PLAYER_BACK - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - 2 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // left arm
+    lineColor(renderer,
+             x + Constants::BOX_SPACE + (Constants::SHADE_WIDTH / 2), Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE + Constants::TIRE_RADIUS - y,
+             x + Constants::BOX_SPACE + (Constants::SHADE_WIDTH / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+             Constants::TIRE_COLOR);
+    
+    // right arm
+    lineColor(renderer,
+             x + Constants::PLAYER_SIZE, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE + Constants::TIRE_RADIUS - y,
+             x + Constants::PLAYER_SIZE, Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+             Constants::TIRE_COLOR);
+    
+    // left hand
+    filledEllipseColor(renderer,
+                      x + Constants::BOX_SPACE + (Constants::SHADE_WIDTH / 2), Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE + Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::MONITOR_COLOR);
+    
+    // right hand
+    filledEllipseColor(renderer,
+                      x + Constants::PLAYER_SIZE, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE + Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::MONITOR_COLOR);
+  }
+  else if (m_dir == LEFT && !m_held) {
+    // facing left
+    // monitor front
+    boxColor(renderer,
+            x + Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT - y,
+            x + Constants::PLAYER_SIZE - Constants::BOX_SPACE - Constants::SHADE_WIDTH, Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - y,
+            Constants::MONITOR_COLOR);
+    
+    // monitor shading
+    boxColor(renderer,
+            x + Constants::PLAYER_SIZE - Constants::BOX_SPACE - Constants::SHADE_WIDTH, Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT - y,
+            x + Constants::PLAYER_SIZE - Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - y,
+            Constants::MONITOR_SHADING_COLOR);
+    
+    // screen
+    boxColor(renderer,
+            x + Constants::BOX_SPACE + Constants::PLAYER_BACK - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+            x + (6.9 * Constants::BOX_SPACE) - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+            Constants::SCREEN_COLOR);
+    
+    // left tire
+    filledEllipseColor(renderer,
+                      x + Constants::BOX_SPACE + Constants::SHADE_WIDTH, Constants::SCREEN_HEIGHT - Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::TIRE_COLOR);
+    
+    // right tire
+    filledEllipseColor(renderer,
+                      x + (7 * Constants::BOX_SPACE), Constants::SCREEN_HEIGHT - Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::TIRE_COLOR);
+    
+    // left eye
+    boxColor(renderer,
+            x + Constants::PLAYER_SIZE - 4 * Constants::BOX_SPACE - Constants::EYE_WIDTH - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT + 2 * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 4 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT * 1.25 + 3 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // right eye
+    boxColor(renderer,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::EYE_WIDTH - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT + 2 * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT * 1.25 + 3 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // mouth
+    boxColor(renderer,
+            x + 2 * Constants::BOX_SPACE + Constants::PLAYER_BACK - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - 2 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // left arm
+    lineColor(renderer,
+             x + (Constants::BOX_SPACE / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+             x + Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+             Constants::TIRE_COLOR);
+    
+    // right arm
+    lineColor(renderer,
+             x + Constants::PLAYER_SIZE + (Constants::BOX_SPACE / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+             x + Constants::PLAYER_SIZE - (Constants::SHADE_WIDTH / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+             Constants::TIRE_COLOR);
+    
+    // left hand
+    filledEllipseColor(renderer,
+                      x + (Constants::BOX_SPACE / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::MONITOR_COLOR);
+    
+    // right hand
+    filledEllipseColor(renderer,
+                      x + Constants::PLAYER_SIZE + (Constants::BOX_SPACE / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::MONITOR_COLOR);
+  }
+  else if (m_dir == LEFT && m_held) {
+    // facing left arms up
+    // monitor front
+    boxColor(renderer,
+            x + Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT - y,
+            x + Constants::PLAYER_SIZE - Constants::BOX_SPACE - Constants::SHADE_WIDTH, Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - y,
+            Constants::MONITOR_COLOR);
+    
+    // monitor shading
+    boxColor(renderer,
+            x + Constants::PLAYER_SIZE - Constants::BOX_SPACE - Constants::SHADE_WIDTH, Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT - y,
+            x + Constants::PLAYER_SIZE - Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - y,
+            Constants::MONITOR_SHADING_COLOR);
+    
+    // screen
+    boxColor(renderer,
+            x + Constants::BOX_SPACE + Constants::PLAYER_BACK - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+            x + (6.9 * Constants::BOX_SPACE) - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::SCREEN_BOTTOM - y,
+            Constants::SCREEN_COLOR);
+    
+    // left tire
+    filledEllipseColor(renderer,
+                      x + Constants::BOX_SPACE + Constants::SHADE_WIDTH, Constants::SCREEN_HEIGHT - Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::TIRE_COLOR);
+    
+    // right tire
+    filledEllipseColor(renderer,
+                      x + (7 * Constants::BOX_SPACE), Constants::SCREEN_HEIGHT - Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::TIRE_COLOR);
+    
+    // left eye
+    boxColor(renderer,
+            x + Constants::PLAYER_SIZE - 4 * Constants::BOX_SPACE - Constants::EYE_WIDTH - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT + 2 * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 4 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT * 1.25 + 3 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // right eye
+    boxColor(renderer,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::EYE_WIDTH - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT + 2 * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_HEIGHT * 1.25 + 3 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // mouth
+    boxColor(renderer,
+            x + 2 * Constants::BOX_SPACE + Constants::PLAYER_BACK - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM * Constants::BOX_SPACE - y,
+            x + Constants::PLAYER_SIZE - 2 * Constants::BOX_SPACE - Constants::SHADE_WIDTH,
+            Constants::SCREEN_HEIGHT - Constants::PLAYER_BOTTOM - 2 * Constants::BOX_SPACE - y,
+            Constants::SCREEN_FACE_COLOR);
+    
+    // left arm
+    lineColor(renderer,
+             x + Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE + Constants::TIRE_RADIUS - y,
+             x + Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+             Constants::TIRE_COLOR);
+    
+    // right arm
+    lineColor(renderer,
+             x + Constants::PLAYER_SIZE - (Constants::SHADE_WIDTH / 2), Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE + Constants::TIRE_RADIUS - y,
+             x + Constants::PLAYER_SIZE - (Constants::SHADE_WIDTH / 2), Constants::SCREEN_HEIGHT - Constants::SCREEN_TOP - y,
+             Constants::TIRE_COLOR);
+    
+    // left hand
+    filledEllipseColor(renderer,
+                      x + Constants::BOX_SPACE, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE + Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::MONITOR_COLOR);
+    
+    // right hand
+    filledEllipseColor(renderer,
+                      x + Constants::PLAYER_SIZE - (Constants::SHADE_WIDTH / 2), Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE + Constants::TIRE_RADIUS - y,
+                      Constants::TIRE_RADIUS, Constants::TIRE_RADIUS,
+                      Constants::MONITOR_COLOR);
+  }
 }
