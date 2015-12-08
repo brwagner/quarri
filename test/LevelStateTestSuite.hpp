@@ -31,14 +31,7 @@ public:
         delete display2;
         delete levelState2;
     }
-    
-    void test_Constructor()
-    {
-        //Is there a way to test this besides testing everything else?
-        
-        TS_ASSERT(true);
-    }
-    
+
     void test_getAtPositionWall()
     {
 
@@ -129,7 +122,6 @@ public:
         TS_ASSERT_EQUALS(1, levelState1->getCurrentLevel());
         levelState1->registerWin();
         TS_ASSERT_EQUALS(2, levelState1->getCurrentLevel());
-        // TODO Cover case where you beat the last level
     }
     
 

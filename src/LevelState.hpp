@@ -25,6 +25,7 @@ public:
     // should use isObjectAtPosition to check for validity before using
     AGameObject* getAtPosition(const std::pair<double,double> pos);
     // changes the key of from to to if to is not already a key
+    // in other words, moves a game object to a new location if that location is not already occupied
     bool move(std::pair<double, double> from, std::pair<double, double> to);
     // checks for GameObject at that position
     bool isAtPosition(const std::pair<double,double> pos);
