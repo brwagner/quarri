@@ -118,5 +118,5 @@ out/runner.cpp:
 out/%TestSuite.cpp: test/%TestSuite.hpp
 	$(CXXTEST_GEN) --part --error-printer $< -o $@
 
-dist: main runner $(LEVEL_DIR)
+dist: main runner $(RES_DIR)
 	zip QuarriDist.zip -r $^

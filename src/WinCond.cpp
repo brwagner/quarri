@@ -23,14 +23,14 @@ void WinCond::update() {
 void WinCond::draw(SDL_Renderer* renderer, int xOff) {
   // flag pole
   boxColor(renderer, 
-          getPos().first + Constants::FLAG_POLE_LEFT, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second, 
-          getPos().first + Constants::FLAG_POLE_RIGHT, Constants::SCREEN_HEIGHT - getPos().second,
+          getPos().first + Constants::FLAG_POLE_LEFT + xOff, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second, 
+          getPos().first + Constants::FLAG_POLE_RIGHT + xOff, Constants::SCREEN_HEIGHT - getPos().second,
           Constants::WIN_COND_POLE_COLOR);
   
   // triangle flag
   filledTrigonColor(renderer,
-                   getPos().first + Constants::FLAG_POLE_RIGHT, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second, 
-                   getPos().first + Constants::FLAG_POLE_RIGHT, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second + 10, 
-                   getPos().first + Constants::PLAYER_SIZE, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second + 5, 
+                   getPos().first + Constants::FLAG_POLE_RIGHT + xOff, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second, 
+                   getPos().first + Constants::FLAG_POLE_RIGHT + xOff, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second + 10, 
+                   getPos().first + Constants::PLAYER_SIZE + xOff, Constants::SCREEN_HEIGHT - Constants::PLAYER_SIZE - getPos().second + 5, 
                    Constants::WIN_COND_COLOR);
 }
