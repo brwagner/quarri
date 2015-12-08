@@ -24,6 +24,15 @@ public:
     void moveCamera(int xOff);
     // sets offset to zero
     void resetCamera();
+    
+    // new methods only used by tests
+    // gets the camera offset
+    int getCameraOffset();
+    //gets the width
+    int getWidth();
+    // gets the height
+    int getHeight();
+
 private:
     // the width of the window
     int m_width;

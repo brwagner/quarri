@@ -34,6 +34,17 @@ void Display::resetCamera() {
     m_cameraOffX = 0;
 }
 
+int Display::getCameraOffset(){
+  return m_cameraOffX;
+}
+
+int Display::getWidth(){
+  return m_width;
+}
+
+int Display::getHeight(){
+  return m_height;
+}
 Display::~Display() {
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
