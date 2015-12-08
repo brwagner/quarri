@@ -88,6 +88,8 @@ int LevelState::getCurrentLevel() {
 }
 
 void LevelState::loadLevel(int level_index) {
+    // center the camera
+    m_display->resetCamera();
     // set load flag to false
     m_should_load = false;
     // clear the map of existing gameobjects

@@ -30,6 +30,10 @@ void Display::moveCamera(int xOff) {
     m_cameraOffX += xOff;
 }
 
+void Display::resetCamera() {
+    m_cameraOffX = 0;
+}
+
 Display::~Display() {
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);

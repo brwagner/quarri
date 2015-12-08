@@ -20,8 +20,10 @@ public:
     void render(std::vector<AGameObject*> * level);
     // cleans up the window and renderer components
     ~Display();
-    //Moves the camera to the left or right
+    // Moves the camera to the left or right
     void moveCamera(int xOff);
+    // sets offset to zero
+    void resetCamera();
 private:
     // the width of the window
     int m_width;
