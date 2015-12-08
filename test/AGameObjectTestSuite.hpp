@@ -33,8 +33,6 @@ public:
   
   // delete objects used for testing
   void tearDown(){
-    delete goWall;
-    delete goMovable;
     delete display;
     delete state;
   }

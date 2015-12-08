@@ -11,7 +11,7 @@ public:
   Block* b;
   
   void setUp(){
-     b = new Block(std::pair<double, double>(0, 0), false, Constants::WALL_COLOR);
+   b = new Block(std::pair<double, double>(0, 0), false, Constants::WALL_COLOR);
   }
   
   void tearDown(){
