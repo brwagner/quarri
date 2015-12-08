@@ -28,13 +28,13 @@ SDL_GFX_FLAGS := -lSDL2_gfx
 
 SDL_MIXER_SOURCE_PATH := $(LIB_DIR)/SDL2_mixer-2.0.0
 SDL_MIXER_BUILD_PATH := $(BUILD_DIR)/SDL2_Mixer_Build
-SDL_MIXER_LIB := -L$(SDL_MIXER_BUILD_PATH)/lib
+SDL_MIXER_LIB := -L$(SDL_MIXER_BUILD_PATH)/lib/
 SDL_MIXER_INCLUDE := -I$(SDL_MIXER_BUILD_PATH)/include/SDL2
 SDL_MIXER_FLAGS := -lSDL2_mixer
 
 LIBS = $(SDL_LIB) $(SDL_GFX_LIB) $(SDL_MIXER_LIB)
 INCLUDES = $(SDL_INCLUDE) $(SDL_GFX_INCLUDE) $(SDL_MIXER_INCLUDE)
-FLAGS = $(SDL_FLAGS) $(SDL_GFX_FLAGS) $(SDL_MIXER_FLAGS)
+FLAGS = $(SDL_FLAGS) $(SDL_GFX_FLAGS) $(SDL_MIXER_FLAGS) 
 
 .PHONY: all clean test dist
 
@@ -42,7 +42,7 @@ all: main
 	./main
 
 main: $(OBJECTS) out/main.o
-	g++ $^ $(LIBS) $(INCLUDES) $(FLAGS) -o main
+	g++ $^ $(INCLUDES) $(LIBS) $(FLAGS) -o main
 
 out/%.o: src/%.cpp $(HEADERS)
 	g++ -c $(INCLUDES) $< -o $@
@@ -90,7 +90,7 @@ install:
 			./configure --prefix=$(SDL_GFX_BUILD_PATH); \
 			make all; \
 			make install; \
-			rm -f $(SDL_GFX_BUILD_PATH)/lib/libSDL2_gfx-*; \
+			rm -f $(SDL_GFX_BUILD_PATH)/lib/*.so; \
 			if [ -d $(SDL_MIXER_BUILD_PATH) ]; \
 				then echo SDL Mixer Install complete. Please remove folder $(SDL_MIXER_BUILD_PATH) if you want to reinstall; \
 			else \
@@ -101,6 +101,7 @@ install:
 				./configure --prefix=$(SDL_MIXER_BUILD_PATH); \
 				make all; \
 				make install; \
+				rm -f $(SDL_MIXER_BUILD_PATH)/lib/*.so; \
 			fi; \
 		fi; \
 	fi
