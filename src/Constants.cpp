@@ -21,12 +21,24 @@ int Constants::FLAG_POLE_WIDTH = 5;
 int Constants::FLAG_POLE_LEFT = 5;
 int Constants::FLAG_POLE_RIGHT = Constants::FLAG_POLE_LEFT + Constants::FLAG_POLE_WIDTH;
 
+int Constants::BRICK_HEIGHT = 5;
+int Constants::BRICK_FULL_WIDTH = 11;
+int Constants::BRICK_HALF_WIDTH = 4;
+int Constants::BETWEEN_BRICK_SPACE = 2;
+int Constants::BETWEEN_BRICK_SPACE_MIDDLE = 3;
+int Constants::BETWEEN_BRICK_WIDTH = 3;
+
+int Constants::MOVE_BOX_SPACING = 5;
+
 unsigned int Constants::MONITOR_COLOR = 0xFFFFFFFF;
 unsigned int Constants::MONITOR_SHADING_COLOR = 0xFFAAAAAA;
 unsigned int Constants::SCREEN_COLOR = 0xFF000000;
 unsigned int Constants::TIRE_COLOR = 0xFF000000;
 unsigned int Constants::SCREEN_FACE_COLOR = 0xFFE2E833;
-unsigned int Constants::WALL_COLOR = 0x99999999;
-unsigned int Constants::MOVABLE_COLOR = 0xFF999999;
+unsigned int Constants::WALL_COLOR = 0x994A4A4A;
+unsigned int Constants::MOVABLE_COLOR = 0xFFB0821E;
 unsigned int Constants::WIN_COND_COLOR = 0xFF33DD00;
 unsigned int Constants::WIN_COND_POLE_COLOR = 0xFFAAAAAA;
+unsigned int Constants::BRICK_COLOR = 0xFF969696;
+unsigned int Constants::LINE_COLOR = 0xFF735412;
+unsigned int Constants::BOX_TOP_BOTTOM_COLOR = 0xFFCC9214;

@@ -25,6 +25,15 @@ public:
     static int FLAG_POLE_LEFT;
     static int FLAG_POLE_RIGHT;
 
+    static int BRICK_HEIGHT;
+    static int BRICK_FULL_WIDTH;
+    static int BRICK_HALF_WIDTH;
+    static int BETWEEN_BRICK_SPACE;
+    static int BETWEEN_BRICK_SPACE_MIDDLE;
+    static int BETWEEN_BRICK_WIDTH;
+
+    static int MOVE_BOX_SPACING;
+
     static unsigned int MONITOR_COLOR;
     static unsigned int MONITOR_SHADING_COLOR;
     static unsigned int SCREEN_COLOR;
@@ -34,6 +43,9 @@ public:
     static unsigned int MOVABLE_COLOR;
     static unsigned int WIN_COND_COLOR;
     static unsigned int WIN_COND_POLE_COLOR;
+    static unsigned int BRICK_COLOR;
+    static unsigned int LINE_COLOR;
+    static unsigned int BOX_TOP_BOTTOM_COLOR;
 
     static int LEVEL_SIZE;
 };
