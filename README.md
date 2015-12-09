@@ -3,14 +3,23 @@ A remake of the math class classic BlockDude, where you play an adorable forklif
 
 ## Project Structure
 build <- compiled libraries
+
 lib <- library sources
+
 main <- exe to run application
+
 Makefile <- used to build application and tests
+
 out <- object files
+
 README.md <- this
+
 res <- audio and level config
+
 runner <- used to run tests
+
 src <- .hpp and .cpp used in the game
+
 test <- TestSuites for CXXTest
 
 ## Supported Platforms
